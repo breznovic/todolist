@@ -1,16 +1,20 @@
-import React from 'react';
-import './App.css';
-import HookCounter from './Components/HookCounter';
-import HookCounter1 from './Components/HookCounter1';
-import HookCounterTwo from './Components/HookCounterTwo';
+import React from 'react'
+import './App.css'
+import { FaReact } from 'react-icons/fa'
+import { BiAt, BiAtom } from 'react-icons/bi'
+import { IconContext } from 'react-icons'
+
 
 function App() {
   return (
-    <div className='app'>
-      <HookCounterTwo />
-      <HookCounter1 />
-    </div>
-  );
+    <IconContext.Provider value={{ color: 'red', size: '6rem' }}>
+      <div className='app'>
+        <FaReact />
+        <BiAt color='green' />
+        <BiAtom />
+      </div>
+    </IconContext.Provider>
+  )
 }
 
 export default App;
