@@ -4,6 +4,7 @@ import { FaReact } from 'react-icons/fa'
 import { BiAt, BiAtom } from 'react-icons/bi'
 import { IconContext } from 'react-icons'
 import HookCounter from './Components/HookCounter'
+import Counter from './Components/Counter'
 
 
 
@@ -16,6 +17,7 @@ function App() {
         <BiAt color='green' />
         <BiAtom />
         <HookCounter />
+        <Counter />
         </div>
       </div>
     </IconContext.Provider>
