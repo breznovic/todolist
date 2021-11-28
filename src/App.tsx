@@ -1,9 +1,9 @@
-import React, {useState} from 'react'
-import classes from './App.module.css'
-import TodoList from "./TodoList"
-import {v1} from "uuid"
+import React, {useState} from 'react';
+import './App.css'
+import TodoList from "./TodoList";
+import {v1} from "uuid";
 
-export type FilterType = 'all' | 'completed' | 'active'
+export type FilterType = 'all' | 'active' | 'completed'
 
 function App() {
 
@@ -12,11 +12,6 @@ function App() {
         {id: v1(), title: 'CSS', isDone: true},
         {id: v1(), title: 'React', isDone: false}
     ])
-
-    function removeTask(id: string) {
-        let filteredTasks = tasks.filter(t => t.id !== id)
-        setTasks(filteredTasks)
-    }
 
     let [filter, setFilter] = useState<FilterType>('all')
     let tasksForTodolist = tasks
@@ -27,14 +22,19 @@ function App() {
         tasksForTodolist = tasks.filter(t => t.isDone === true)
     }
 
+    const removeTask = (id: string) => {
+        let filteredTasks = tasks.filter(t => t.id != id)
+        setTasks(filteredTasks)
+    }
+
     function changeFilter(value: FilterType) {
         setFilter(value)
     }
 
     function addTask(title: string) {
         let task = {id: v1(), title: title, isDone: false}
-        let newTask = [task, ...tasks]
-        setTasks(newTask)
+        let newTasks = [task, ...tasks]
+        setTasks(newTasks)
     }
 
     function changeStatus(taskId: string, isDone: boolean) {
@@ -42,20 +42,21 @@ function App() {
         if (task) {
             task.isDone = isDone
         }
-        setTasks([...tasks])
+    setTasks([...tasks])
     }
 
-
-    return (<div className={classes.app}>
-        <TodoList title='What to learn'
-                  tasks={tasksForTodolist}
-                  removeTask={removeTask}
-                  changeFilter={changeFilter}
-                  addTask={addTask}
-                  changeTaskStatus={changeStatus}
-                  filter={filter}
-        />
-    </div>)
+    return (
+        <div className='app'>
+            <TodoList title='What to learn'
+                      tasks={tasksForTodolist}
+                      removeTask={removeTask}
+                      changeFilter={changeFilter}
+                      addTask={addTask}
+                      changeTaskStatus={changeStatus}
+                      filter={filter}
+            />
+        </div>
+    );
 }
 
 export default App;
