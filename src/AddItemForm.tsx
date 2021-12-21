@@ -1,4 +1,7 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import React, {ChangeEvent, KeyboardEvent, useState} from "react"
+import {Box, IconButton, TextField} from "@mui/material"
+import AddBoxIcon from '@mui/icons-material/AddBox'
+import './App.css'
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
@@ -25,19 +28,26 @@ export function AddItemForm(props: AddItemFormPropsType) {
             props.addItem(title.trim())
             setTitle('')
         } else {
-            setError('Field is require')
+            setError('Value is require')
         }
     }
 
-    return <div>
-        <input value={title}
-               onChange={onChangeHandler}
-               onKeyPress={onClickEnter}
-               className={error ? 'error' : ''}
-        />
-        <button onClick={addTask}
-        >+
-        </button>
-        {error && <div className='errorMessage'>{error}</div>}
+    return <div className='container'>
+            <TextField
+                label='Type value'
+                variant="outlined"
+                value={title}
+                onChange={onChangeHandler}
+                onKeyPress={onClickEnter}
+                error={!!error}
+                helperText={error}
+            />
+        <IconButton onClick={addTask}>
+            <AddBoxIcon color="primary" fontSize='inherit'/>
+        </IconButton>
     </div>
 }
+
+
+
+
