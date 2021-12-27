@@ -1,43 +1,22 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react'
+import React, {ChangeEvent} from 'react'
 import './App.css'
 import {FilterType, TaskType} from "./App";
+import {SuperForm} from "./SuperForm";
 
 type PropsType = {
     title: string
     tasks: Array<TaskType>
     deleteTask: (id: string, todoId: string) => void
-    newTask: (title: string, todoId: string) => void
     changeF: (value: FilterType, todoId: string) => void
     changeStat: (id: string, isDone: boolean, todoId: string) => void
     filter: FilterType
     id: string
     deleteTodo: (todoId: string) => void
+    newTask: (title: string, todoId: string) => void
 }
 
+
 function Todolist(props: PropsType) {
-
-    let [newTitle, setNewTitle] = useState('')
-    let [error, setError] = useState<string | null>(null)
-
-    const newTask = (e: ChangeEvent<HTMLInputElement>) => {
-        (setNewTitle(e.currentTarget.value))
-    }
-
-    const anyEnterKey = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError(null)
-        if (e.charCode === 13) {
-            buttonBang()
-        }
-    }
-
-    const buttonBang = () => {
-        if (newTitle.trim() !== '') {
-            props.newTask(newTitle.trim(), props.id)
-            setNewTitle('')
-        } else {
-            setError('Write your text')
-        }
-    }
 
     const allIn = () => props.changeF('all', props.id)
     const compIn = () => props.changeF('completed', props.id)
@@ -47,16 +26,15 @@ function Todolist(props: PropsType) {
         props.deleteTodo(props.id)
     }
 
+    const newTask = (title: string) => {
+        props.newTask(title, props.id)
+    }
+
     return <div>
-        <h3>{props.title}<button onClick={deleteTodo}>x</button></h3>
-        <div>
-            <input value={newTitle}
-                   onChange={newTask}
-                   onKeyPress={anyEnterKey}
-                   className={error ? 'error' : ''}/>
-            <button onClick={buttonBang}>+</button>
-            {error && <div className='errorMessage'>{error}</div>}
-        </div>
+        <h3>{props.title}
+            <button onClick={deleteTodo}>x</button>
+        </h3>
+        <SuperForm addForm={newTask}/>
         <div>
             {
                 props.tasks.map(t => {
@@ -75,9 +53,9 @@ function Todolist(props: PropsType) {
             }
         </div>
         <div>
-            <button onClick={allIn} className={props.filter ==='all' ? 'activeFilter' : ''}>All</button>
-            <button onClick={actIn} className={props.filter ==='active' ? 'activeFilter' : ''}>Active</button>
-            <button onClick={compIn} className={props.filter ==='completed' ? 'activeFilter' : ''}>Completed</button>
+            <button onClick={allIn} className={props.filter === 'all' ? 'activeFilter' : ''}>All</button>
+            <button onClick={actIn} className={props.filter === 'active' ? 'activeFilter' : ''}>Active</button>
+            <button onClick={compIn} className={props.filter === 'completed' ? 'activeFilter' : ''}>Completed</button>
         </div>
     </div>
 }

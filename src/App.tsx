@@ -2,11 +2,17 @@ import React, {useState} from 'react'
 import './App.css'
 import Todolist from "./Todolist";
 import {v1} from "uuid";
+import {SuperForm} from "./SuperForm";
+import todolist from "./Todolist";
 
 export type TaskType = {
     id: string
     title: string
     isDone: boolean
+}
+
+type TaskStateType = {
+[key: string]: Array<TaskType>
 }
 
 export type FilterType = 'all' | 'active' | 'completed'
@@ -67,7 +73,7 @@ function App() {
         {id: todolistId2, title: 'What to buy', filter: 'all'}
     ])
 
-    let [tasksObj, setTasksObj] = useState({
+    let [tasksObj, setTasksObj] = useState<TaskStateType>({
         [todolistId1]: [
             {id: v1(), title: 'HTML', isDone: true},
             {id: v1(), title: 'CSS', isDone: true},
@@ -78,7 +84,21 @@ function App() {
             {id: v1(), title: 'Rust', isDone: false}]
     })
 
+    function newTodo(title: string) {
+        let todolist: TodolistType = {
+            id: v1(),
+            filter: 'all',
+            title: title
+        }
+     setTodolists([todolist, ...todolists])
+        setTasksObj({
+            ...tasksObj,
+            [todolist.id]: []
+        })
+    }
+
     return <div className='app'>
+       <SuperForm addForm={newTodo}/>
         {
             todolists.map((todo) => {
 
