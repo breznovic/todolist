@@ -2,6 +2,7 @@ import React, {ChangeEvent} from 'react'
 import './App.css'
 import {FilterType, TaskType} from "./App";
 import {SuperForm} from "./SuperForm";
+import {MagicSpan} from "./MagicSpan";
 
 type PropsType = {
     title: string
@@ -42,11 +43,11 @@ function Todolist(props: PropsType) {
                     const deleteTask = () => props.deleteTask(t.id, props.id)
                     const changeStat = (e: ChangeEvent<HTMLInputElement>) => props.changeStat(t.id, e.currentTarget.checked, props.id)
 
-                    return <div key={t.id} className={t.isDone === true ? 'isDone' : ''}><input
+                    return <div key={t.id} className={t.isDone ? 'isDone' : ''}><input
                         type="checkbox"
                         checked={t.isDone}
                         onChange={changeStat}/>
-                        <span>{t.title}</span>
+                       <MagicSpan title={t.title}/>
                         <button onClick={deleteTask}>x</button>
                     </div>
                 })
@@ -61,3 +62,4 @@ function Todolist(props: PropsType) {
 }
 
 export default Todolist
+
