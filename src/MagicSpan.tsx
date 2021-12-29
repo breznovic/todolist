@@ -17,5 +17,5 @@ export function MagicSpan(props: MagicSpanType) {
 
     return editMode
         ? <input value={props.title} onBlur={startView} onChange={titleChanger} autoFocus />
-        : <span onDoubleClick={startEdit}>{props.title}</span>
+        : <span onClick={startEdit} autoFocus >{props.title}</span>
 }
