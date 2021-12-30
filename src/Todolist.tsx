@@ -48,6 +48,8 @@ function Todolist(props: PropsType) {
                         checked={t.isDone}
                         onChange={changeStat}/>
                        <MagicSpan title={t.title}/>
+                       <MagicSpan title={t.title}/>
+                       <MagicSpan title={t.title}/>
                         <button onClick={deleteTask}>x</button>
                     </div>
                 })
