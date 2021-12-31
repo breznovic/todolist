@@ -1,8 +1,6 @@
 import React, {ChangeEvent} from 'react'
 import './App.css'
 import {FilterType, TaskType} from "./App";
-import {SuperForm} from "./SuperForm";
-import {MagicSpan} from "./MagicSpan";
 
 type PropsType = {
     title: string
@@ -35,7 +33,6 @@ function Todolist(props: PropsType) {
         <h3>{props.title}
             <button onClick={deleteTodo}>x</button>
         </h3>
-        <SuperForm addForm={newTask}/>
         <div>
             {
                 props.tasks.map(t => {
@@ -47,9 +44,6 @@ function Todolist(props: PropsType) {
                         type="checkbox"
                         checked={t.isDone}
                         onChange={changeStat}/>
-                       <MagicSpan title={t.title}/>
-                       <MagicSpan title={t.title}/>
-                       <MagicSpan title={t.title}/>
                         <button onClick={deleteTask}>x</button>
                     </div>
                 })
