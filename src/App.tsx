@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
 import './App.css'
-import Todolist from "./Todolist";
 import {v1} from "uuid";
 
 export type TaskType = {
