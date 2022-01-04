@@ -12,6 +12,13 @@ function Todolist(props: PropsType) {
         <h3>{props.title}
             <button>x</button>
         </h3>
+        <div>
+            {
+                props.tasks.map(t => <div key={t.id}>
+                    <input type="checkbox" checked={t.isDone}/><span>{t.title}</span>
+                </div>)
+            }
+        </div>
         <button>All</button>
         <button>Active</button>
         <button>Completed</button>
