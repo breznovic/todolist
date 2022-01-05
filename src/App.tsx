@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
 import './App.css'
 import {v1} from "uuid";
+import {Todolist} from "./Todolist";
+
 
 export type TaskType = {
     id: string
@@ -8,10 +10,42 @@ export type TaskType = {
     isDone: boolean
 }
 
+export type FilterType = 'all' | 'completed' | 'active'
+
 function App() {
 
-    return <div className='app'>
+    let [tasks, setTasks] = useState([
+        {id: v1(), title: 'HTML', isDone: true},
+        {id: v1(), title: 'CSS', isDone: false},
+        {id: v1(), title: 'React', isDone: false},
+    ])
 
+    let [choose, setChoose] = useState<FilterType>('all')
+
+    let chooseTask = tasks
+
+    if (choose === 'active') {
+        chooseTask = tasks.filter(t => t.isDone === false)
+    }
+
+    if (choose === 'completed') {
+        chooseTask = tasks.filter(t => t.isDone === true)
+    }
+
+    function demTask (id: string) {
+        let filteredTask = tasks.filter(t => t.id !== id)
+        setTasks(filteredTask)
+    }
+
+    function chooseTaskStatus(value: FilterType) {
+        setChoose(value)
+    }
+
+    return <div className='app'>
+        <Todolist title='What to learn'
+                  tasks={chooseTask}
+                  demTask={demTask}
+        chooseTaskStatus={chooseTaskStatus}/>
     </div>
 }
 
