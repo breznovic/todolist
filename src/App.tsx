@@ -32,7 +32,7 @@ function App() {
         chooseTask = tasks.filter(t => t.isDone === true)
     }
 
-    function demTask (id: string) {
+    function demTask(id: string) {
         let filteredTask = tasks.filter(t => t.id !== id)
         setTasks(filteredTask)
     }
@@ -41,11 +41,18 @@ function App() {
         setChoose(value)
     }
 
+    function anotherTask(title: string) {
+        let task = {id: v1(), title: title, isDone: false}
+        let anTask = [task, ...tasks]
+        setTasks(anTask)
+    }
+
     return <div className='app'>
         <Todolist title='What to learn'
                   tasks={chooseTask}
                   demTask={demTask}
-        chooseTaskStatus={chooseTaskStatus}/>
+                  chooseTaskStatus={chooseTaskStatus}
+                  anotherTask={anotherTask}/>
     </div>
 }
 
