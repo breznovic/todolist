@@ -1,56 +1,68 @@
-import React, {ChangeEvent, useState, KeyboardEvent} from 'react'
+import React, {ChangeEvent} from 'react'
 import './App.css'
 import {FilterType, TaskType} from "./App";
+import TheBestInput from "./TheBestInput";
+import {BestSpan} from "./BestSpan";
 
 type PropsType = {
     title: string
     tasks: Array<TaskType>
-    demTask: (id: string) => void
-    chooseTaskStatus: (value: FilterType) => void
-    anotherTask: (title: string) => void
+    demTask: (id: string, todolistId: string) => void
+    chooseTaskStatus: (value: FilterType, todolistId: string) => void
+    customStatus: (taskId: string, isDone: boolean, todolistId: string) => void
+    customTask: (taskId: string, newTitle: string, todolistId: string) => void
+    choose: FilterType
+    id: string
+    demTD: (todolistID: string) => void
+    anotherTask: (title: string, todolistId: string) => void
+    changeWords: (id: string, newTitle: string) => void
 }
 
 export function Todolist(props: PropsType) {
 
-    let [forTask, setForTask] = useState('')
-
-    const chooseActive = () => props.chooseTaskStatus('active')
-    const chooseAll = () => props.chooseTaskStatus('all')
-    const chooseComplete = () => props.chooseTaskStatus('completed')
-    const freshTask = () => {props.anotherTask(forTask)
-    setForTask('')
+    const chooseActive = () => props.chooseTaskStatus('active', props.id)
+    const chooseAll = () => props.chooseTaskStatus('all', props.id)
+    const chooseComplete = () => props.chooseTaskStatus('completed', props.id)
+    const demTD = () => {
+        props.demTD(props.id)
     }
-    const freshInputTask = (e: ChangeEvent<HTMLInputElement>) => {
-        setForTask(e.currentTarget.value)
+    const anTask = (title: string) => {
+        props.anotherTask(title, props.id)
     }
-    const freshButtonTask = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.charCode === 13) {
-            freshTask()
-        }
+    const changeWords = (newTitle: string) => {
+        props.changeWords(props.id, newTitle)
     }
 
-        return (
-            <div>
-                <h3>{props.title}</h3>
-                <div>
-                    <input value={forTask}
-                           onChange={freshInputTask}
-                    onKeyPress={freshButtonTask}/>
-                    <button onClick={freshTask}>+</button>
-                </div>
-                {
-                    props.tasks.map(t => {
-                        const demolTask = () => props.demTask(t.id)
-                        return <div key={t.id}>
-                            <input type="checkbox" checked={t.isDone}/>
-                            <span>{t.title}</span>
-                            <button onClick={demolTask}>x</button>
-                        </div>
-                    })
-                }
-                <button onClick={chooseAll}>All</button>
-                <button onClick={chooseActive}>Active</button>
-                <button onClick={chooseComplete}>Completed</button>
-            </div>
-        )
-    }
+    return (
+        <div>
+            <h3><BestSpan title={props.title} onChange={changeWords}/>
+                <button onClick={demTD}>x</button>
+            </h3>
+            <TheBestInput addItem={anTask}/>
+            {
+                props.tasks.map(t => {
+                    const demolTask = () => props.demTask(t.id, props.id)
+                    const thisStatus = (e: ChangeEvent<HTMLInputElement>) => {
+                        props.customStatus(t.id, e.currentTarget.checked, props.id)
+                    }
+                    const thisNewtask = (newValue: string) => {
+                        props.customTask(t.id, newValue, props.id)
+                    }
+                    return <div key={t.id} className={t.isDone ? 'isDone' : ''}>
+                        <input type="checkbox"
+                               checked={t.isDone}
+                               onChange={thisStatus}
+                        />
+                        <BestSpan title={t.title} onChange={thisNewtask}/>
+                        <button onClick={demolTask}>x</button>
+                    </div>
+                })
+            }
+            <button className={props.choose === 'all' ? 'activeFilter' : ''} onClick={chooseAll}>All</button>
+            <button className={props.choose === 'active' ? 'activeFilter' : ''} onClick={chooseActive}>Active</button>
+            <button className={props.choose === 'completed' ? 'activeFilter' : ''} onClick={chooseComplete}>Completed
+            </button>
+        </div>
+    )
+}
+
