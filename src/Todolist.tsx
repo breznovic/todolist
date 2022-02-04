@@ -1,28 +1,56 @@
-import React from 'react'
+import React, {ChangeEvent, useState, KeyboardEvent} from 'react'
 import './App.css'
-import {TaskType} from "./App";
+import {FilterType, TaskType} from "./App";
 
 type PropsType = {
     title: string
     tasks: Array<TaskType>
+    deleteTask: (taskId: string) => void
+    filter: FilterType
+    changeFilter: (value: FilterType) => void
+    addTask: (title: string) => void
 }
 
 function Todolist(props: PropsType) {
-    return   <div>
+
+    let [title, setTitle] = useState('')
+    
+    const allTasks = () => props.changeFilter('all')
+    const completedTasks = () => props.changeFilter('completed')
+    const activeTasks = () => props.changeFilter('active')
+    const addTask = () => {
+        props.addTask(title)
+        setTitle('')
+    }
+    const input = (e: ChangeEvent<HTMLInputElement>) => {
+        setTitle(e.currentTarget.value)
+    }
+    const enterClick = (e: KeyboardEvent<HTMLInputElement>) => {if (e.charCode === 13){addTask()}}
+
+
+    return <div>
         <h3>{props.title}</h3>
         <div>
-            <input/>
-            <button>+</button>
+            <input value={title}
+                   onChange={input}
+                   onKeyPress={enterClick}
+            />
+            <button onClick={addTask}>+</button>
         </div>
         <ul>
-            <li><input type="checkbox" checked={props.tasks[0].isDone}/> <span>{props.tasks[0].title}</span></li>
-            <li><input type="checkbox" checked={props.tasks[1].isDone}/> <span>{props.tasks[1].title}</span></li>
-            <li><input type="checkbox" checked={props.tasks[2].isDone}/> <span>{props.tasks[2].title}</span></li>
+            {
+                props.tasks.map(t => {
+                    const deleteTask = () => props.deleteTask(t.id)
+                    return <li key={t.id}><input type="checkbox" checked={t.isDone}/><span> {t.title}</span>
+                        <button onClick={deleteTask}>x</button>
+                    </li>
+                })
+            }
         </ul>
         <div>
-            <button>All</button>
-            <button>Active</button>
-            <button>Completed</button>
+            <button onClick={allTasks}>All</button>
+            <button onClick={activeTasks}>Active</button>
+            <button onClick={completedTasks}>Completed</button>
         </div>
     </div>
 }
