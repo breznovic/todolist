@@ -3,6 +3,8 @@ import './App.css'
 import {FilterType, TaskType} from "./App";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
+import CancelTwoToneIcon from '@mui/icons-material/CancelTwoTone';
+import {Checkbox, FormControlLabel} from "@mui/material";
 
 type PropsType = {
     title: string
@@ -43,40 +45,45 @@ function Todolist(props: PropsType) {
     const changeTodolistTitle = (newTitle: string) => {
         props.changeTodolistTitle(props.id, newTitle)
     }
-        return (
-            <div>
+    return (
+        <div>
             <h3><EditableSpan title={props.title} onChange={changeTodolistTitle}/>
-                <button onClick={deleteTodolist}>x</button>
+                <button onClick={deleteTodolist} className='button'>
+                    <CancelTwoToneIcon/>
+                </button>
             </h3>
             <AddItemForm addItem={addTask}/>
-                {
-                    props.tasks.map(t => {
-                        const removeTask = () => props.removeTask(t.id, props.id)
-                        const changeCheck = (e: ChangeEvent<HTMLInputElement>) => {
-                            props.changeStatus(t.id, e.currentTarget.checked, props.id)
+            {
+                props.tasks.map(t => {
+                    const removeTask = () => props.removeTask(t.id, props.id)
+                    const changeCheck = (e: ChangeEvent<HTMLInputElement>) => {
+                        props.changeStatus(t.id, e.currentTarget.checked, props.id)
 
-                        }
-                        const changeTitle = (newValue: string) => {
-                            props.changeTaskTitle(t.id, newValue, props.id)
-                        }
+                    }
+                    const changeTitle = (newValue: string) => {
+                        props.changeTaskTitle(t.id, newValue, props.id)
+                    }
 
-                        return <div key={t.id} className={t.isDone ? 'isDone' : ''}>
-                            <input type="checkbox"
-                                   checked={t.isDone}
-                                   onChange={changeCheck}/>
-                            <EditableSpan title={t.title} onChange={changeTitle}/>
-                            <button onClick={removeTask}>x</button>
-                        </div>
-                    })
-                }
-                <button onClick={changeOnAll} className={props.filter === 'all' ? 'activeFilter' : ''}>All</button>
-                <button onClick={changeOnActive} className={props.filter === 'active' ? 'activeFilter' : ''}>Active
-                </button>
-                <button onClick={changeOnCompleted}
-                        className={props.filter === 'completed' ? 'activeFilter' : ''}>Completed
-                </button>
+                    return <div key={t.id} className={t.isDone ? 'isDone' : ''}>
+                        <FormControlLabel control={<Checkbox onChange={changeCheck}/>}
+                                          label=""
+                                          checked={t.isDone}
+                        />
+                        <EditableSpan title={t.title} onChange={changeTitle}/>
+                        <button onClick={removeTask} className='button'>
+                            <CancelTwoToneIcon/>
+                        </button>
+                    </div>
+                })
+            }
+            <button onClick={changeOnAll} className={props.filter === 'all' ? 'activeFilter' : ''}>All</button>
+            <button onClick={changeOnActive} className={props.filter === 'active' ? 'activeFilter' : ''}>Active
+            </button>
+            <button onClick={changeOnCompleted}
+                    className={props.filter === 'completed' ? 'activeFilter' : ''}>Completed
+            </button>
         </div>
-        )
-    }
+    )
+}
 
 export default Todolist

@@ -1,4 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
+import {Box, FormControl, TextField} from "@mui/material";
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
@@ -30,14 +32,23 @@ export function AddItemForm(props: AddItemFormPropsType) {
     }
 
     return <div>
-        <input value={title}
-               onChange={onChangeHandler}
-               onKeyPress={onClickEnter}
-               className={error ? 'error' : ''}
-        />
-        <button onClick={addTask}
-        >+
-        </button>
+        <Box sx={{
+            width: 500,
+            maxWidth: '100%',
+        }}>
+            <FormControl sx={{ width: '30ch' }}>
+                <TextField fullWidth label="New task" id="fullWidth"
+                               value={title}
+                               onChange={onChangeHandler}
+                               onKeyPress={onClickEnter}
+                               className={error ? 'error' : ''}
+                />
+            </FormControl>
+            <button onClick={addTask}>
+                <AddTwoToneIcon sx={{ fontSize: 50 }}/>
+            </button>
+        </Box>
         {error && <div className='errorMessage'>{error}</div>}
     </div>
 }
+

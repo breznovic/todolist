@@ -1,24 +1,30 @@
 .app {
-  padding: 30px;
-  display: flex;
+    padding: 30px;
+    display: flex;
 }
 
 .app > div {
-  margin-right: 50px;
+    margin-right: 50px;
 }
 
-.error {  border: red 1px solid;
+.error {
+    border: red 1px solid;
 }
 
 .errorMessage {
-  color: red;
+    color: red;
 }
 
 .activeFilter {
-  background-color: aquamarine;
+    background-color: aquamarine;
 }
 
 .isDone {
-  opacity: 0.5
+    opacity: 0.5
+}
+
+.button {
+    border: none;
+    background-color: rgba(0, 0, 0, 0);
 }
 
