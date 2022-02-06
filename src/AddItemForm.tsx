@@ -1,6 +1,7 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from "react";
-import AddTwoToneIcon from '@mui/icons-material/AddTwoTone';
-import {Box, FormControl, TextField} from "@mui/material";
+import React, {ChangeEvent, KeyboardEvent, useState} from "react"
+import {IconButton, TextField} from "@mui/material"
+import AddBoxIcon from '@mui/icons-material/AddBox'
+import './App.css'
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
@@ -27,28 +28,22 @@ export function AddItemForm(props: AddItemFormPropsType) {
             props.addItem(title.trim())
             setTitle('')
         } else {
-            setError('Field is require')
+            setError('Value is require')
         }
     }
 
-    return <div>
-        <Box sx={{
-            width: 500,
-            maxWidth: '100%',
-        }}>
-            <FormControl sx={{ width: '30ch' }}>
-                <TextField fullWidth label="New task" id="fullWidth"
-                               value={title}
-                               onChange={onChangeHandler}
-                               onKeyPress={onClickEnter}
-                               className={error ? 'error' : ''}
-                />
-            </FormControl>
-            <button onClick={addTask}>
-                <AddTwoToneIcon sx={{ fontSize: 50 }}/>
-            </button>
-        </Box>
-        {error && <div className='errorMessage'>{error}</div>}
+    return <div className='container'>
+        <TextField
+            label='Type value'
+            variant="outlined"
+            value={title}
+            onChange={onChangeHandler}
+            onKeyPress={onClickEnter}
+            error={!!error}
+            helperText={error}
+        />
+        <IconButton onClick={addTask}>
+            <AddBoxIcon color="primary" fontSize='inherit'/>
+        </IconButton>
     </div>
 }
-

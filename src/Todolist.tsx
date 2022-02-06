@@ -1,10 +1,12 @@
 import React, {ChangeEvent} from 'react'
 import './App.css'
-import {FilterType, TaskType} from "./App";
-import {AddItemForm} from "./AddItemForm";
-import {EditableSpan} from "./EditableSpan";
-import CancelTwoToneIcon from '@mui/icons-material/CancelTwoTone';
-import {Checkbox, FormControlLabel} from "@mui/material";
+import {FilterType, TaskType} from "./App"
+import {AddItemForm} from "./AddItemForm"
+import {EditableSpan} from "./EditableSpan"
+import {Button, IconButton} from "@mui/material"
+import {Delete} from '@mui/icons-material'
+import Checkbox from '@mui/material/Checkbox'
+
 
 type PropsType = {
     title: string
@@ -25,11 +27,9 @@ function Todolist(props: PropsType) {
     const changeOnAll = () => {
         props.changeFilter('all', props.id)
     }
-
     const changeOnCompleted = () => {
         props.changeFilter('completed', props.id)
     }
-
     const changeOnActive = () => {
         props.changeFilter('active', props.id)
     }
@@ -44,46 +44,50 @@ function Todolist(props: PropsType) {
 
     const changeTodolistTitle = (newTitle: string) => {
         props.changeTodolistTitle(props.id, newTitle)
+
     }
-    return (
+    return <div>
+        <h3><EditableSpan title={props.title} onChange={changeTodolistTitle}/>
+            <IconButton onClick={deleteTodolist} size="large">
+                <Delete fontSize="inherit"/>
+            </IconButton>
+        </h3>
+        <AddItemForm addItem={addTask}/>
         <div>
-            <h3><EditableSpan title={props.title} onChange={changeTodolistTitle}/>
-                <button onClick={deleteTodolist} className='button'>
-                    <CancelTwoToneIcon/>
-                </button>
-            </h3>
-            <AddItemForm addItem={addTask}/>
             {
                 props.tasks.map(t => {
+
                     const removeTask = () => props.removeTask(t.id, props.id)
                     const changeCheck = (e: ChangeEvent<HTMLInputElement>) => {
                         props.changeStatus(t.id, e.currentTarget.checked, props.id)
-
                     }
                     const changeTitle = (newValue: string) => {
                         props.changeTaskTitle(t.id, newValue, props.id)
                     }
 
-                    return <div key={t.id} className={t.isDone ? 'isDone' : ''}>
-                        <FormControlLabel control={<Checkbox onChange={changeCheck}/>}
-                                          label=""
-                                          checked={t.isDone}
-                        />
+                    return <div key={t.id} >
+                        <Checkbox checked={t.isDone}
+                                  onChange={changeCheck}/>
                         <EditableSpan title={t.title} onChange={changeTitle}/>
-                        <button onClick={removeTask} className='button'>
-                            <CancelTwoToneIcon/>
-                        </button>
+                        <IconButton onClick={removeTask}>
+                            <Delete/>
+                        </IconButton>
                     </div>
                 })
             }
-            <button onClick={changeOnAll} className={props.filter === 'all' ? 'activeFilter' : ''}>All</button>
-            <button onClick={changeOnActive} className={props.filter === 'active' ? 'activeFilter' : ''}>Active
-            </button>
-            <button onClick={changeOnCompleted}
-                    className={props.filter === 'completed' ? 'activeFilter' : ''}>Completed
-            </button>
         </div>
-    )
+        <div>
+            <Button color={'primary'} variant={props.filter === 'all' ? 'contained' : 'outlined'}
+                    onClick={changeOnAll}>All</Button>
+            <Button color={'warning'} variant={props.filter === 'active' ? 'contained' : 'outlined'}
+                    onClick={changeOnActive}>Active</Button>
+            <Button color={'success'} variant={props.filter === 'completed' ? 'contained' : 'outlined'}
+                    onClick={changeOnCompleted}>Completed</Button>
+        </div>
+    </div>
+
 }
 
 export default Todolist
+
+
