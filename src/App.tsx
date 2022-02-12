@@ -38,11 +38,18 @@ export function App() {
         setFilter(value)
     }
 
+    function addTask (title: string) {
+        let newTask = {id: v1(), title: title, isDone: false}
+        let newTasks = [newTask, ...tasks]
+        setTasks(newTasks)
+    }
+
     return <div>
         <Todolist title='What to learn'
                   tasks={tasksForTodolist}
                   removeTask={removeTask}
                   changeFilter={changeFilter}
+                  addTask={addTask}
         />
     </div>
 }
