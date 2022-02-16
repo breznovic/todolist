@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import './App.css'
 import {v1} from "uuid";
 import Todolist from "./Todolist";
+import {AddItemForm} from "./AddItemForm";
 
 export type TaskType = {
     id: string
@@ -17,6 +18,10 @@ export type TodoType = {
     filter: FilterType
 }
 
+type TaskStateType = {
+    [key: string]: Array<TaskType>
+}
+
 export function App() {
 
     let todolistId1 = v1()
@@ -27,7 +32,7 @@ export function App() {
         {id: todolistId2, title: 'What to buy', filter: 'all'},
     ])
 
-    let [tasksObj, setTasks] = useState({
+    let [tasksObj, setTasks] = useState<TaskStateType>({
         [todolistId1]: [
             {id: v1(), title: 'HTML', isDone: true},
             {id: v1(), title: 'CSS', isDone: true},
@@ -79,8 +84,33 @@ export function App() {
         setTasks({...tasksObj})
     }
 
-    return <div className='app'>
+    let changeTodoTitle = (id: string, newTitle: string) => {
+       const todolist = todolists.find(td => td.id === id)
+        if (todolist) {
+            todolist.title = newTitle
+            setTodolists([...todolists])
+        }
+    }
 
+    function addTodo(title: string) {
+        let todolist: TodoType = {
+            id: v1(), filter: 'all', title: title
+        }
+        setTodolists([todolist, ...todolists])
+        setTasks({...tasksObj, [todolist.id]: []})
+    }
+
+    function onChangeTaskTitle(taskId: string, newTitle: string, todolistId: string) {
+        let tasks = tasksObj[todolistId]
+        let task = tasks.find(t => t.id === taskId)
+        if (task) {
+            task.title = newTitle
+            setTasks({...tasksObj})
+        }
+    }
+
+    return <div className='app'>
+        <AddItemForm addItem={addTodo}/>
         {
             todolists.map((td) => {
 
@@ -102,6 +132,8 @@ export function App() {
                                  key={td.id}
                                  id={td.id}
                                  removeTodo={removeTodo}
+                                 onChangeTaskTitle={onChangeTaskTitle}
+                                 changeTodoTitle={changeTodoTitle}
                 />
             })
         }
