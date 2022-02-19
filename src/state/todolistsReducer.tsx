@@ -12,13 +12,13 @@ export type AddTodoType = {
     todolistId: string
 }
 
-type ChangeTodoFilterType = {
+export type ChangeTodoFilterType = {
     type: 'CHANGE-FILTER'
     id: string
     filter: FilterType
 }
 
-type ChangeTodoTitleType = {
+export type ChangeTodoTitleType = {
     type: 'CHANGE-TODO-TITLE'
     id: string
     title: string
@@ -26,18 +26,22 @@ type ChangeTodoTitleType = {
 
 type ActionType = RemoveTodoType | AddTodoType | ChangeTodoFilterType | ChangeTodoTitleType
 
+export let todolistId1 = v1()
+export let todolistId2 = v1()
 
-export const todolistsReducer = (state: Array<TodoType>, action: ActionType): Array<TodoType> => {
+const initialState: Array<TodoType> = []
+
+export const todolistsReducer = (state: Array<TodoType> = initialState, action: ActionType): Array<TodoType> => {
     switch (action.type) {
         case 'REMOVE-TODO': {
             return state.filter(td => td.id !== action.id)
         }
         case 'ADD-TODO': {
-            return [...state, {
+            return [{
                 id: action.todolistId,
                 title: action.title,
                 filter: 'all'
-            }]
+            }, ...state]
         }
         case 'CHANGE-TODO-TITLE': {
             const todolist = state.find(td => td.id === action.id)
@@ -46,6 +50,7 @@ export const todolistsReducer = (state: Array<TodoType>, action: ActionType): Ar
             }
             return [...state]
         }
+
         case 'CHANGE-FILTER': {
             const todolist = state.find(td => td.id === action.id)
             if (todolist) {
@@ -54,12 +59,12 @@ export const todolistsReducer = (state: Array<TodoType>, action: ActionType): Ar
             return [...state]
         }
         default:
-            throw new Error('Errror!')
+            return state
     }
 }
 
 export const removeTodoAC = (todolistId: string): RemoveTodoType => {
-return {type: "REMOVE-TODO", id: todolistId}
+    return {type: "REMOVE-TODO", id: todolistId}
 }
 
 export const addTodoAC = (title: string): AddTodoType => {
