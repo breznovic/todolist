@@ -1,4 +1,7 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import React, {ChangeEvent, KeyboardEvent, useState} from "react"
+import {IconButton, TextField} from "@mui/material"
+import AddBoxIcon from '@mui/icons-material/AddBox'
+import './App.css'
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
@@ -6,36 +9,43 @@ type AddItemFormPropsType = {
 
 export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
 
-    const [title, setNewTitle] = useState('')
-    const [error, setError] = useState<string | null>(null)
-    const addNewTask = () => {
-        if (title.trim() !== '') {
-            props.addItem(title.trim())
-            setNewTitle('')
-        } else {
-            setError('Your are wrong, stupid!')
-        }
+    let [title, setTitle] = useState('')
+    let [error, setError] = useState<string | null>(null)
+
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setTitle(e.currentTarget.value)
     }
 
-    const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setNewTitle(e.currentTarget.value)
-    }
-    const enterHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+    const onClickEnter = (e: KeyboardEvent<HTMLInputElement>) => {
         if (error !== null) {
             setError(null)
         }
         if (e.charCode === 13) {
-            addNewTask()
+            addTask()
         }
     }
 
-    return <div>
-        <input value={title}
-               onChange={changeHandler}
-               onKeyPress={enterHandler}
-               className={error ? 'error' : ''}
+    const addTask = () => {
+        if (title.trim() !== '') {
+            props.addItem(title.trim())
+            setTitle('')
+        } else {
+            setError('Value is require')
+        }
+    }
+
+    return <div className='container'>
+        <TextField
+            label='Type value'
+            variant="outlined"
+            value={title}
+            onChange={onChangeHandler}
+            onKeyPress={onClickEnter}
+            error={!!error}
+            helperText={error}
         />
-        <button onClick={addNewTask}>+</button>
-        {error && <div className='errorMessage'>{error}</div>}
+        <IconButton onClick={addTask}>
+            <AddBoxIcon color="primary" fontSize='inherit'/>
+        </IconButton>
     </div>
 })

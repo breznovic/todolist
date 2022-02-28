@@ -10,5 +10,6 @@ const rootReducer = combineReducers({
 })
 
 export const store = createStore(rootReducer)
+
 // @ts-ignore
 window.store = store
