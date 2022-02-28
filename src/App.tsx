@@ -99,6 +99,20 @@ function App() {
                                         changeTaskTitle={changeTaskTitle}
                                         changeTodolistTitle={changeTodolistTitle}
                                     />
+                                    <Todolist
+                                        key={td.id}
+                                        id={td.id}
+                                        title={td.title}
+                                        tasks={tasksForTodolist}
+                                        removeTask={removeTask}
+                                        changeFilter={changeFilter}
+                                        addTask={addTask}
+                                        changeStatus={changeStatus}
+                                        filter={td.filter}
+                                        deleteTodolist={deleteTodolist}
+                                        changeTaskTitle={changeTaskTitle}
+                                        changeTodolistTitle={changeTodolistTitle}
+                                    />
                                 </Paper>
                             </Grid>
                         })
