@@ -5,26 +5,13 @@ import {AddItemForm} from "./AddItemForm";
 import {
     addTodoAC,
     changeTodoFilterAC,
-    changeTodoTitleAC,
-    removeTodoAC,
+    changeTodoTitleAC, FilterType,
+    removeTodoAC, TodolistDomainType,
 } from "./state/todolistsReducer";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "./state/tasksReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "./state/store";
-
-export type TaskType = {
-    id: string
-    title: string
-    isDone: boolean
-}
-
-export type FilterType = 'active' | 'completed' | 'all'
-
-export type TodoType = {
-    id: string
-    title: string
-    filter: FilterType
-}
+import {TaskType} from "./api/todoAPI";
 
 export type TaskStateType = {
     [key: string]: Array<TaskType>
@@ -34,7 +21,7 @@ export function App() {
 
     const dispatch = useDispatch()
 
-    const todolists = useSelector<AppRootState, Array<TodoType>>(state => state.todolists)
+    const todolists = useSelector<AppRootState, Array<TodolistDomainType>>(state => state.todolists)
 
     const tasks = useSelector<AppRootState, TaskStateType>(state => state.tasks)
 

@@ -6,14 +6,14 @@ test('correct task should be removed', () => {
 
     const startState: TasksStateType = {
         'todolistId1': [
-            {id: '1', title: 'CSS', isDone: false},
+            {id: '1', title: 'CSS', status: TaskStatuses},
             {id: '2', title: 'JS', isDone: true},
-            {id: '3', title: 'React', isDone: false},
+            {id: '3', title: 'React', status: TaskStatuses},
         ],
         'todolistId2': [
-            {id: '1', title: 'Bread', isDone: false},
+            {id: '1', title: 'Bread', status: TaskStatuses},
             {id: '2', title: 'Milk', isDone: true},
-            {id: '3', title: 'Tea', isDone: false},
+            {id: '3', title: 'Tea', status: TaskStatuses},
         ]
     }
 
@@ -29,14 +29,14 @@ test('correct task should be added', () => {
 
     const startState: TasksStateType = {
         'todolistId1': [
-            {id: '1', title: 'CSS', isDone: false},
+            {id: '1', title: 'CSS', status: TaskStatuses},
             {id: '2', title: 'JS', isDone: true},
-            {id: '3', title: 'React', isDone: false},
+            {id: '3', title: 'React', status: TaskStatuses},
         ],
         'todolistId2': [
-            {id: '1', title: 'Bread', isDone: false},
+            {id: '1', title: 'Bread', status: TaskStatuses},
             {id: '2', title: 'Milk', isDone: true},
-            {id: '3', title: 'Tea', isDone: false},
+            {id: '3', title: 'Tea', status: TaskStatuses},
         ]
     }
 
@@ -55,14 +55,14 @@ test('correct task status should be changed', () => {
 
     const startState: TasksStateType = {
         'todolistId1': [
-            {id: '1', title: 'CSS', isDone: false},
+            {id: '1', title: 'CSS', status: TaskStatuses},
             {id: '2', title: 'JS', isDone: true},
-            {id: '3', title: 'React', isDone: false},
+            {id: '3', title: 'React', status: TaskStatuses},
         ],
         'todolistId2': [
-            {id: '1', title: 'Bread', isDone: false},
+            {id: '1', title: 'Bread', status: TaskStatuses},
             {id: '2', title: 'Milk', isDone: true},
-            {id: '3', title: 'Tea', isDone: false},
+            {id: '3', title: 'Tea', status: TaskStatuses},
         ]
     }
 
@@ -77,14 +77,14 @@ test('correct task status should be changed', () => {
 test('correct title of task should be changed', () => {
     const startState: TasksStateType = {
         'todolistId1': [
-            {id: '1', title: 'CSS', isDone: false},
+            {id: '1', title: 'CSS', status: TaskStatuses},
             {id: '2', title: 'JS', isDone: true},
-            {id: '3', title: 'React', isDone: false},
+            {id: '3', title: 'React', status: TaskStatuses},
         ],
         'todolistId2': [
-            {id: '1', title: 'Bread', isDone: false},
+            {id: '1', title: 'Bread', status: TaskStatuses},
             {id: '2', title: 'Milk', isDone: true},
-            {id: '3', title: 'Tea', isDone: false},
+            {id: '3', title: 'Tea', status: TaskStatuses},
         ]
     }
 

@@ -1,9 +1,10 @@
 import React, {useCallback} from 'react'
 import './App.css'
-import {FilterType, TaskType} from "./App";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import {Task} from "./Task";
+import {FilterType} from "./state/todolistsReducer";
+import {TaskType} from "./api/todoAPI";
 
 type PropsType = {
     title: string

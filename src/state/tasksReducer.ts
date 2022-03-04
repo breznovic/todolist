@@ -1,6 +1,7 @@
 import {TaskStateType} from "../App";
 import {v1} from "uuid";
 import {AddTodoType, RemoveTodoType, todolistId1, todolistId2} from "./todolistsReducer";
+import {TaskStatuses} from "../api/todoAPI";
 
 type RemoveTaskType = {
     type: 'REMOVE-TASK'
@@ -49,7 +50,7 @@ export const tasksReducer = (state: TaskStateType = initialState, action: Action
         case 'ADD-TASK': {
             const stateCopy = {...state}
             const tasks = state[action.todolistId]
-            const newTask = {id: v1(), title: action.title, isDone: false}
+            const newTask = {id: v1(), title: action.title, status: TaskStatuses}
             const newTasks = [newTask, ...tasks]
             stateCopy[action.todolistId] = newTasks
             return stateCopy
