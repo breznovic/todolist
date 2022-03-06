@@ -1,10 +1,12 @@
-import React, {useCallback} from 'react'
+import React, {useCallback, useEffect} from 'react'
 import './App.css'
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import {Task} from "./Task";
-import {FilterType} from "./state/todolistsReducer";
+import {fetchTodolistsTC, FilterType} from "./state/todolistsReducer";
 import {TaskType} from "./api/todoAPI";
+import {useDispatch} from "react-redux";
+import {fetchTasksTC} from "./state/tasksReducer";
 
 type PropsType = {
     title: string
@@ -21,6 +23,12 @@ type PropsType = {
 }
 
 const Todolist = React.memo((props: PropsType) => {
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(fetchTasksTC(props.id))
+    }, [])
 
     const changeAll = useCallback(() => props.changeFilter('all', props.id), [props.changeFilter, props.id])
     const changeActive = useCallback(() => props.changeFilter('active', props.id), [props.changeFilter, props.id])
