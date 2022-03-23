@@ -1,27 +1,76 @@
-import React from 'react'
+import React, {useReducer} from 'react'
 import './App.css';
 
-function App() {
-    return <div id='game-board'>
-        <div className='cell'></div>
-        <div className='cell'></div>
-        <div className='cell'></div>
-        <div className='cell'></div>
-        <div className='cell'></div>
-        <div className='cell'></div>
-        <div className='cell'></div>
-        <div className='cell'></div>
-        <div className='cell'></div>
-        <div className='cell'></div>
-        <div className='cell'></div>
-        <div className='cell'></div>
-        <div className='cell'></div>
-        <div className='cell'></div>
-        <div className='cell'></div>
-        <div className='cell'></div>
-        {/*<div className='tile'>2</div>*/}
-    </div>
+export type AddDigitType = {
+    type: 'ADD_DIGIT'
+}
 
+export type ChooseOperationType = {
+    type: 'CHOOSE_OPERATION'
+}
+
+export type ClearType = {
+    type: 'CLEAR'
+}
+
+export type DeleteDigitType = {
+    type: 'DELETE_DIGIT'
+}
+
+export type EvaluateType = {
+    type: 'EVALUATE'
+}
+
+type ActionsType = AddDigitType | ChooseOperationType | ClearType | DeleteDigitType | EvaluateType
+
+const actions = {
+    ADD_DIGIT: 'add-digit',
+    CHOOSE_OPERATION: 'choose-operation',
+    CLEAR: 'clear',
+    DELETE_DIGIT: 'delete-digit',
+    EVALUATE: 'evaluate'
+}
+
+function reducer(state, {type, payload} {
+switch(type) {
+    case: 'ADD_DIGIT'
+        return {
+        ...state,
+            currentOperand: `${currentOperand || ''}${payload.digit}`
+        }
+}
+}
+
+function App() {
+
+    const [{currentOperand, previousOperand, operation}, dispatch] = useReducer(reducer, {})
+
+    dispatch({type: ACTIONS.ADD_DIGIT, payload: {digit: 1}})
+
+    return <div className='calculator-grid'>
+        <div className='output'>
+            <div className='previous-operand'>{previousOperand}{operation}</div>
+            <div className='current-operand'>{currentOperand}</div>
+        </div>
+        <button className='span-two'>AC</button>
+        <button>DEL</button>
+        <button>/</button>
+        <button>1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>*</button>
+        <button>4</button>
+        <button>5</button>
+        <button>6</button>
+        <button>+</button>
+        <button>7</button>
+        <button>8</button>
+        <button>9</button>
+        <button>-</button>
+        <button>.</button>
+        <button>0</button>
+        <button className='span-two'>=</button>
+    </div>
 }
 
 export default App;
