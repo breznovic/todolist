@@ -1,22 +1,24 @@
-import React, {FormEvent, useState} from 'react'
+import React, {ChangeEvent, FormEvent, useEffect, useRef, useState} from 'react'
 import '../App.css'
+import {v1} from "uuid";
 
 type PropsType = {
-    onSubmit: () => void
+    onSubmit: (id: string) => void
+    edit: (value: string) => void
 }
 
 function TodoForm(props: PropsType) {
 
-    const [input, setInput] = useState('')
+    const [input, setInput] = useState(props.edit ? props.edit.value : '')
 
-    const handleChange = (e: number) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setInput(e.target.value)
     }
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         props.onSubmit({
-            id: Math.floor(Math.random() * 10000),
+            id: v1(),
             text: input
         })
         setInput('')
@@ -24,13 +26,24 @@ function TodoForm(props: PropsType) {
 
     return <div>
         <form className='todo-form' onSubmit={handleSubmit}>
-            <input type='text'
-                   placeholder='Add a todo'
-                   value={input} name='text'
-                   className='todo-input'
-                   onChange={handleChange}
-            />
-            <button className='todo-button'>Add todo</button>
+            {props.edit ? (
+                <><input type='text'
+                                  placeholder='Update your item'
+                                  value={input} name='text'
+                                  className='todo-input edit'
+                                  onChange={handleChange}
+                                  autoFocus
+                />
+                <button className='todo-button edit'>Update</button></>) :
+                (<><input type='text'
+                placeholder='Add a todo'
+                value={input} name='text'
+                className='todo-input'
+                onChange={handleChange}
+                autoFocus
+                />
+                <button className='todo-button'>Add todo</button></>)
+            }
         </form>
     </div>
 }
