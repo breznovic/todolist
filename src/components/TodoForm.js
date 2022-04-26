@@ -2,20 +2,15 @@ import React, {ChangeEvent, FormEvent, useEffect, useRef, useState} from 'react'
 import '../App.css'
 import {v1} from "uuid";
 
-type PropsType = {
-    onSubmit: (id: string) => void
-    edit: (value: string) => void
-}
-
-function TodoForm(props: PropsType) {
+function TodoForm(props) {
 
     const [input, setInput] = useState(props.edit ? props.edit.value : '')
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e) => {
         setInput(e.target.value)
     }
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e) => {
         e.preventDefault()
         props.onSubmit({
             id: v1(),
@@ -26,6 +21,7 @@ function TodoForm(props: PropsType) {
 
     return <div>
         <form className='todo-form' onSubmit={handleSubmit}>
+
             {props.edit ? (
                 <><input type='text'
                                   placeholder='Update your item'
