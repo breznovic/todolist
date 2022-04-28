@@ -3,11 +3,17 @@ import '../App.css'
 import TodoForm from "./TodoForm";
 import Todo from "./Todo";
 
+export type TodoType = {
+    id: string
+    isComplete?: boolean
+    text: string
+}
+
 function TodoList() {
 
-    const [todos, setTodos] = useState([])
+    const [todos, setTodos] = useState<Array<TodoType>>([])
 
-    const addTodo = (todo) => {
+    const addTodo = (todo: TodoType) => {
 
         if (!todo.text) return
 
@@ -15,19 +21,19 @@ function TodoList() {
         setTodos(newTodos)
     }
 
-    const updateTodo = (todoId, newValue) => {
+    const updateTodo = (todoId: string, newValue: TodoType) => {
         if (!newValue.text) {
             return
         }
         setTodos(prev => prev.map(item => (item.id === todoId ? newValue : item)))
     }
 
-    const removeTodo = (id) => {
+    const removeTodo = (id: string) => {
         const removeArr = [...todos].filter(todo => todo.id !== id)
         setTodos(removeArr)
     }
 
-    const completeTodo = (id) => {
+    const completeTodo = (id: string) => {
         let updatedTodos = todos.map(todo => {
             if (todo.id === id) {
                 todo.isComplete = !todo.isComplete

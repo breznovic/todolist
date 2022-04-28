@@ -1,16 +1,22 @@
 import React, {ChangeEvent, FormEvent, useEffect, useRef, useState} from 'react'
 import '../App.css'
 import {v1} from "uuid";
+import {EditType} from "./Todo";
 
-function TodoForm(props) {
+type PropsType = {
+    edit: EditType
+    onSubmit: (value: string) => void
+}
+
+function TodoForm(props: PropsType) {
 
     const [input, setInput] = useState(props.edit ? props.edit.value : '')
 
-    const handleChange = (e) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setInput(e.target.value)
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         props.onSubmit({
             id: v1(),
