@@ -21,7 +21,7 @@ function TodoList() {
         setTodos(newTodos)
     }
 
-    const updateTodo = (todoId: string, newValue: TodoType) => {
+    const updateTodo = (todoId: string | null, newValue: TodoType) => {
         if (!newValue.text) {
             return
         }

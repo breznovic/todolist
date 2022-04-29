@@ -2,10 +2,11 @@ import React, {ChangeEvent, FormEvent, useEffect, useRef, useState} from 'react'
 import '../App.css'
 import {v1} from "uuid";
 import {EditType} from "./Todo";
+import {TodoType} from "./TodoList";
 
 type PropsType = {
-    edit: EditType
-    onSubmit: (value: string) => void
+    edit?: EditType<null | string>
+    onSubmit: (value: TodoType) => void
 }
 
 function TodoForm(props: PropsType) {
